@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
 
 st.set_page_config(page_title="Loan Data Visualization and Prediction", layout="wide")
 st.title('Loan Data Visualization and Prediction')
@@ -88,6 +89,8 @@ with tab2:
         df_das.rename(columns = new, inplace = True)
 
         data = df_das.tail(1).to_numpy()
+        scaler_model = joblib.load('scaler.pkl')
+        data = scaler_model.transform(data)
         print(data)        
         prediction= model_svm.predict(data)[0]
         print(prediction)
